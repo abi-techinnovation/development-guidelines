@@ -1,12 +1,12 @@
 # GitHubリポジトリへ接続したい
 
-状況:
+状況
 
 - ローカルリポジトリを GitHub リポジトリへ push したい
 - `origin` の URL を GitHub に向けたい
 - SSH または HTTPS の接続設定を確認したい
 
-前提:
+前提
 
 - GitHub 側にリポジトリが作成済みである
 - Git のユーザー名とメールアドレスが設定済みである
@@ -14,7 +14,7 @@
 - GitHub ではデフォルトブランチ名として `main` を使う運用を推奨する
 - 既存リポジトリで `master` がデフォルトの場合は、`main` にリネームしてから連携する
 
-SSH 設定を `gh` で行う場合:
+SSH 設定を `gh` で行う場合
 
 ```bash
 gh auth login
@@ -30,7 +30,7 @@ cat ~/.ssh/id_ed25519.pub
 ssh -T git@github.com
 ```
 
-確認:
+確認
 
 ```bash
 git status
@@ -44,31 +44,31 @@ git branch --show-current
 git branch -m master main
 ```
 
-SSH で `origin` を追加する:
+SSH で `origin` を追加する
 
 ```bash
 git remote add origin git@github.com:<owner>/<repository>.git
 ```
 
-既存の `origin` を SSH に変更する:
+既存の `origin` を SSH に変更する
 
 ```bash
 git remote set-url origin git@github.com:<owner>/<repository>.git
 ```
 
-HTTPS を使う場合:
+HTTPS を使う場合
 
 ```bash
 git remote set-url origin https://github.com/<owner>/<repository>.git
 ```
 
-設定確認:
+設定確認
 
 ```bash
 git remote -v
 ```
 
-初回 push:
+初回 push
 
 ```bash
 git push -u origin main
@@ -80,13 +80,13 @@ GitHub 側の Default branch を `main` に変更する。
 gh repo edit --default-branch main
 ```
 
-作業ブランチを push する場合:
+作業ブランチを push する場合
 
 ```bash
 git push -u origin feature/example
 ```
 
-注意:
+注意
 
 - 認証トークンや秘密情報をコミットしない
 - `master` を削除する場合は、GitHub 側の Default branch が `main` に変更済みであることを確認する

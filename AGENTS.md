@@ -12,7 +12,7 @@ git diff
 git diff --cached
 ```
 
-確認すること:
+確認すること
 
 - 1 コミット 1 目的になっているか
 - 不要なファイル、生成物、ログ、秘密情報が含まれていないか
@@ -43,7 +43,7 @@ git add -p
 
 コミットメッセージは `git/COMMIT_MESSAGE_GUIDE.md` に従い、Conventional Commits 形式にする。
 
-基本形式:
+基本形式
 
 ```text
 <type>(<scope>): <description>
@@ -51,7 +51,7 @@ git add -p
 
 日本語の `description` は体言止めで簡潔に書く。
 
-例:
+例
 
 ```text
 docs(readme): 開発ガイドラインREADMEの整備
@@ -78,5 +78,5 @@ git log --oneline --decorate -1
 ## 注意
 
 - 共有済み履歴を書き換える操作は、明示的な依頼がない限り行わない
-- `git reset --hard` や `git clean -fd` のような破壊的操作は、明示的な依頼なしに実行しない
+- `git reset --hard` や `git clean -fd` のような破壊的操作は明示的な依頼なしに実行しない
 - コミット対象外の変更がある場合は、勝手に戻さず対象から外す

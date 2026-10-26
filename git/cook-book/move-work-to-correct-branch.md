@@ -1,6 +1,6 @@
 # 間違ったブランチで作業していた
 
-まだコミット前なら:
+まだコミット前なら
 
 ```bash
 git stash push -m "move work"
@@ -8,7 +8,7 @@ git switch -c feature/correct-branch
 git stash pop
 ```
 
-すでにコミット済みなら:
+すでにコミット済みなら
 
 ```bash
 git branch feature/correct-branch

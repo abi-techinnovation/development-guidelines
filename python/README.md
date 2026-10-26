@@ -1,6 +1,6 @@
 # Python 開発ガイドライン
 
-このディレクトリは、Python プロジェクトの開発運用を揃えるためのガイドラインを管理するためのものです。
+このディレクトリはPython プロジェクトの開発運用を揃えるためのガイドラインを管理します。
 
 - `PYTHON_GUIDELINES.md`: Python 開発時の標準ツールと運用方針
 - `RUFF_LINT_GUIDE.md`: `ruff` の lint 運用ガイド

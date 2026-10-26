@@ -1,6 +1,6 @@
 # Gitflow ガイド
 
-この文書は、Gitflow を採用する場合のブランチ構成、作業フロー、運用ルールをまとめる。
+この文書はGitflow を採用する場合のブランチ構成、作業フロー、運用ルールをまとめる。
 
 Gitflow は、リリース作業が明確に分かれているプロジェクトや、複数バージョンを並行して保守するプロジェクトに向いている。一方で、継続的デリバリーを重視する小規模プロジェクトでは運用が重くなる場合がある。
 
@@ -24,7 +24,7 @@ flowchart LR
   hotfix -->|PRで修正を次回開発へ反映| develop
 ```
 
-主な流れ:
+主な流れ
 
 - `feature/*` は `develop` から作成し、完了後に `develop` へ戻す
 - `release/*` は `develop` から作成し、完了後に `main` と `develop` へ戻す
@@ -33,7 +33,7 @@ flowchart LR
 
 ## 0. 前提と判断基準
 
-このガイドでは、リモートリポジトリを `origin`、本番ブランチを `main` とする。
+このガイドではリモートリポジトリを `origin`、本番ブランチを `main` とする。
 
 - `main` と `develop` は保護ブランチとし、原則として PR 経由で変更する
 - ブランチを作成する前に、元ブランチを最新化する
@@ -47,7 +47,7 @@ flowchart LR
 | `release/*` | `develop` | `main` と `develop` |
 | `hotfix/*` | `main` | `main` と `develop` |
 
-`release/*` と `hotfix/*` は、`main` への反映だけで完了としない。同じ修正を `develop` にも反映し、反映結果を確認してからブランチを削除する。
+`release/*` と `hotfix/*` は`main` への反映だけで完了としない。同じ修正を `develop` にも反映し、反映結果を確認してからブランチを削除する。
 
 ## 1. 基本方針
 
@@ -64,14 +64,14 @@ flowchart LR
 
 `main` は本番リリース済みの履歴を管理するブランチ。
 
-運用ルール:
+運用ルール
 
 - 直接コミットしない
 - リリース完了時に `release/*` または `hotfix/*` からマージする
 - リリースタグを付与する
 - 常にリリース可能な状態を保つ
 
-例:
+例
 
 ```bash
 git switch main
@@ -85,13 +85,13 @@ git push origin main --tags
 
 `develop` は次回リリースに向けた統合ブランチ。
 
-運用ルール:
+運用ルール
 
 - `feature/*` の取り込み先にする
 - 次回リリース候補が揃ったら `release/*` を作成する
 - `main` に入った `hotfix/*` の変更も取り込む
 
-例:
+例
 
 ```bash
 git switch develop
@@ -102,15 +102,15 @@ git pull --ff-only
 
 `feature/*` は機能追加や通常の修正を行う作業ブランチ。
 
-作成元:
+作成元
 
 - `develop`
 
-マージ先:
+マージ先
 
 - `develop`
 
-例:
+例
 
 ```bash
 git switch develop
@@ -118,7 +118,7 @@ git pull --ff-only
 git switch -c feature/add-user-search
 ```
 
-完了時:
+完了時
 
 ```bash
 git switch develop
@@ -127,7 +127,7 @@ git merge --no-ff feature/add-user-search
 git branch -d feature/add-user-search
 ```
 
-推奨:
+推奨
 
 - 1 ブランチ 1 目的にする
 - PR を作る場合も `develop` 向けに作成する
@@ -137,23 +137,23 @@ git branch -d feature/add-user-search
 
 `release/*` はリリース準備用ブランチ。
 
-作成元:
+作成元
 
 - `develop`
 
-マージ先:
+マージ先
 
 - `main`
 - `develop`
 
-用途:
+用途
 
 - バージョン番号の更新
 - リリースノート更新
 - 軽微なバグ修正
 - リリース前の最終確認
 
-作成例:
+作成例
 
 ```bash
 git switch develop
@@ -161,7 +161,7 @@ git pull --ff-only
 git switch -c release/1.2.0
 ```
 
-リリース完了例:
+リリース完了例
 
 ```bash
 git switch main
@@ -179,7 +179,7 @@ git branch -d release/1.2.0
 git push origin --delete release/1.2.0
 ```
 
-注意:
+注意
 
 - `release/*` では新機能追加を避ける
 - リリース調整以外の変更は次の `feature/*` に戻す
@@ -189,16 +189,16 @@ git push origin --delete release/1.2.0
 
 `hotfix/*` は本番リリース済みの状態に対する緊急修正ブランチ。
 
-作成元:
+作成元
 
 - `main`
 
-マージ先:
+マージ先
 
 - `main`
 - `develop`
 
-作成例:
+作成例
 
 ```bash
 git switch main
@@ -206,7 +206,7 @@ git pull --ff-only
 git switch -c hotfix/fix-login-error
 ```
 
-修正完了例:
+修正完了例
 
 ```bash
 git switch main
@@ -224,7 +224,7 @@ git branch -d hotfix/fix-login-error
 git push origin --delete hotfix/fix-login-error
 ```
 
-注意:
+注意
 
 - 修正範囲を最小限にする
 - 無関係なリファクタリングやフォーマット変更を混ぜない
@@ -234,7 +234,7 @@ git push origin --delete hotfix/fix-login-error
 
 - 通常は PR を作成し、レビューと CI の成功を確認してからマージする
 - ローカルで直接マージする場合も、レビューとテストを省略しない
-- `release/*` と `hotfix/*` は、`main` 向けと `develop` 向けの反映を別々に確認する
+- `release/*` と `hotfix/*` は`main` 向けと `develop` 向けの反映を別々に確認する
 - 同じブランチから複数の PR を作成できない場合は、`main` へのマージ後に `main` から `develop` へ反映する専用 PR を作成する
 
 ## 3. 標準ワークフロー
@@ -384,7 +384,7 @@ git push origin --delete hotfix/fix-payment-timeout
 - `hotfix/*` では緊急修正以外を避ける
 - PR の向き先を間違えない
 
-PR の向き先:
+PR の向き先
 
 - `feature/*` -> `develop`
 - `release/*` -> `main`、`develop`
@@ -403,7 +403,7 @@ git tag -a v1.2.0 -m "Release v1.2.0"
 git push origin main v1.2.0
 ```
 
-推奨:
+推奨
 
 - タグ名は `v<major>.<minor>.<patch>` にする
 - タグはリリースコミットに付ける

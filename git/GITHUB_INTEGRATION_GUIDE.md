@@ -1,6 +1,6 @@
 # GitHub連携ガイド
 
-この文書は、ローカルの Git リポジトリと GitHub リポジトリを連携するための基本手順をまとめる。
+この文書はローカルの Git リポジトリと GitHub リポジトリを連携するための基本手順をまとめる。
 
 ## 1. 基本方針
 
@@ -21,7 +21,7 @@ git config --global user.name
 git config --global user.email
 ```
 
-未設定の場合:
+未設定の場合
 
 ```bash
 git config --global user.name "Your Name"
@@ -43,7 +43,7 @@ git remote show origin
 
 ## 3. デフォルトブランチ名
 
-GitHub では、新規リポジトリのデフォルトブランチ名として `main` を使う運用を推奨する。このガイドでも、デフォルトブランチ名は `main` に統一する。
+GitHub では新規リポジトリのデフォルトブランチ名として `main` を使う運用を推奨する。このガイドでも、デフォルトブランチ名は `main` に統一する。
 
 既存リポジトリや古いプロジェクトでは `master` がデフォルトブランチになっている場合がある。その場合は、ローカルのデフォルトブランチを `main` にリネームし、GitHub 側のデフォルトブランチも `main` に変更する。
 
@@ -80,7 +80,7 @@ git push origin --delete master
 
 ## 4. SSHで接続する
 
-SSH 接続の設定は、GitHub CLI の `gh` コマンドを使う方法を推奨する。手動で SSH キーを作成して GitHub に登録する方法も利用できる。
+SSH 接続の設定はGitHub CLI の `gh` コマンドを使う方法を推奨する。手動で SSH キーを作成して GitHub に登録する方法も利用できる。
 
 ### 4.1 ghコマンドを使う方法（推奨）
 
@@ -90,7 +90,7 @@ GitHub CLI の認証を開始する。
 gh auth login
 ```
 
-対話中の選択は、基本的に次を選ぶ。
+対話中の選択は基本的に次を選ぶ。
 
 - `GitHub.com`
 - `SSH`
@@ -108,7 +108,7 @@ SSH 接続を確認する。
 ssh -T git@github.com
 ```
 
-補足:
+補足
 
 - `gh auth login` は SSH キーの作成や GitHub への登録を補助できる
 - 既存の SSH キーを使うか、新しく作成するかは対話中に選択できる
@@ -134,7 +134,7 @@ ssh-keygen -t ed25519 -C "your-email@example.com"
 cat ~/.ssh/id_ed25519.pub
 ```
 
-接続確認:
+接続確認
 
 ```bash
 ssh -T git@github.com
@@ -142,19 +142,19 @@ ssh -T git@github.com
 
 ## 5. GitHubリポジトリをリモートに設定する
 
-まだリモートがない場合:
+まだリモートがない場合
 
 ```bash
 git remote add origin git@github.com:<owner>/<repository>.git
 ```
 
-既存の `origin` を変更する場合:
+既存の `origin` を変更する場合
 
 ```bash
 git remote set-url origin git@github.com:<owner>/<repository>.git
 ```
 
-設定確認:
+設定確認
 
 ```bash
 git remote -v
@@ -168,13 +168,13 @@ git remote -v
 git branch --show-current
 ```
 
-初回 push:
+初回 push
 
 ```bash
 git push -u origin main
 ```
 
-作業ブランチを push する場合:
+作業ブランチを push する場合
 
 ```bash
 git push -u origin feature/example
@@ -227,7 +227,7 @@ git push -u origin feature/example
 
 GitHub 上で Pull Request を作成する。
 
-PR 作成前の確認:
+PR 作成前の確認
 
 ```bash
 git status
@@ -235,7 +235,7 @@ git diff origin/main...HEAD
 git log --oneline --decorate origin/main..HEAD
 ```
 
-確認すること:
+確認すること
 
 - PR に含める差分が意図した範囲か
 - コミット単位がレビューしやすいか
@@ -258,25 +258,25 @@ HTTPS ではパスワードではなく Personal Access Token や GitHub CLI の
 
 ## 10. よくある確認コマンド
 
-リモート URL 確認:
+リモート URL 確認
 
 ```bash
 git remote -v
 ```
 
-現在のブランチと追跡先確認:
+現在のブランチと追跡先確認
 
 ```bash
 git branch -vv
 ```
 
-リモートブランチ一覧:
+リモートブランチ一覧
 
 ```bash
 git branch -r
 ```
 
-push 先を確認する:
+push 先を確認する
 
 ```bash
 git remote show origin

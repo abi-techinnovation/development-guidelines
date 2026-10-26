@@ -1,6 +1,6 @@
 # Pythonガイドライン
 
-このガイドラインでは、Pythonプロジェクトの標準ツールとして `uv`、`ruff`、`ty` を使用する。
+このガイドラインではPythonプロジェクトの標準ツールとして `uv`、`ruff`、`ty` を使用する。
 
 - `uv`: Python本体、仮想環境、依存関係、実行を管理する
 - `ruff`: LintとFormatを担当する
@@ -15,17 +15,17 @@
 - 静的解析は `ruff check` に統一する
 - 型検査は `ty check` に統一する
 - 個別インストールより、プロジェクトの開発依存として管理する
-- コマンドの実行は、グローバル環境ではなくプロジェクト環境で行う
+- コマンドの実行はグローバル環境ではなくプロジェクト環境で行う
 
 ## 2. ツール概要
 
 ### 2.1 uv
 
-`uv` は Astral 製の Python パッケージ・プロジェクトマネージャーで、依存関係管理、仮想環境、Python バージョン管理、ツール実行をまとめて扱える。
+`uv` は Astral 製の Python パッケージ・プロジェクトマネージャーで、依存関係の管理、仮想環境、Python バージョン管理、ツール実行をまとめて扱える。
 
 従来の `pip`、`venv`、`pip-tools`、`pipx`、`poetry` の役割を広くカバーできるため、Python 開発の入口を `uv` に一本化しやすい。
 
-主な用途:
+主な用途
 
 - プロジェクト作成
 - 仮想環境作成
@@ -37,7 +37,7 @@
 
 `ruff` は Astral 製の高速な Linter / Formatter で、Flake8 系のチェック、import 整理、フォーマットを一つのツールで扱える。
 
-主な用途:
+主な用途
 
 - 未使用 import などの静的チェック
 - 自動修正
@@ -48,9 +48,9 @@
 
 `ty` は Astral 製の高速な型チェッカー兼 Language Server。型エラー検出を主目的に使う。
 
-主な用途:
+主な用途
 
-- 型整合性の確認
+- 型の整合性の確認
 - 型エラーの早期検出
 - 変更監視による再チェック
 - エディタ連携
@@ -63,7 +63,7 @@
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-インストール確認:
+インストール確認
 
 ```bash
 uv
@@ -73,14 +73,14 @@ uv
 
 `uv init` の既定はアプリケーション用のパッケージプロジェクトである。`uv` 0.12 以降では、アプリケーションにも build system が設定され、ソースコードは `src/<プロジェクト名>/` に生成される。
 
-新規プロジェクト作成:
+新規プロジェクト作成
 
 ```bash
 uv init my-project
 cd my-project
 ```
 
-生成される主な成果物:
+生成される主な成果物
 
 ```text
 my-project/
@@ -100,7 +100,7 @@ my-project/
 uv run my-project
 ```
 
-ライブラリプロジェクトとして作る場合:
+ライブラリプロジェクトとして作る場合
 
 ```bash
 uv init --lib my-library
@@ -133,14 +133,14 @@ uv run example.py
 uv lock --script example.py
 ```
 
-使用する Python バージョンを指定して作る場合:
+使用する Python バージョンを指定して作る場合
 
 ```bash
 uv init --python 3.12 my-project
 cd my-project
 ```
 
-ライブラリプロジェクトを Python バージョン指定で作る場合:
+ライブラリプロジェクトを Python バージョン指定で作る場合
 
 ```bash
 uv init --lib --python 3.12 my-library
@@ -159,25 +159,25 @@ uv add --dev ruff ty
 
 ### 4.1 依存関係管理
 
-依存関係追加:
+依存関係追加
 
 ```bash
 uv add requests
 ```
 
-開発依存追加:
+開発依存追加
 
 ```bash
 uv add --dev pytest
 ```
 
-ロックファイル更新:
+ロックファイル更新
 
 ```bash
 uv lock
 ```
 
-環境同期:
+環境同期
 
 ```bash
 uv sync
@@ -185,19 +185,19 @@ uv sync
 
 ### 4.2 コマンド実行
 
-プロジェクト環境で Python を実行:
+プロジェクト環境で Python を実行
 
 ```bash
 uv run python
 ```
 
-パッケージプロジェクトのエントリーポイント実行:
+パッケージプロジェクトのエントリーポイント実行
 
 ```bash
 uv run my-project
 ```
 
-プロジェクト内の Python ファイル実行:
+プロジェクト内の Python ファイル実行
 
 ```bash
 uv run main.py
@@ -205,31 +205,31 @@ uv run main.py
 
 ### 4.3 Ruff
 
-Lint 実行:
+Lint 実行
 
 ```bash
 uv run ruff check
 ```
 
-特定ディレクトリだけチェック:
+特定ディレクトリだけチェック
 
 ```bash
 uv run ruff check src tests
 ```
 
-自動修正付き Lint:
+自動修正付き Lint
 
 ```bash
 uv run ruff check --fix
 ```
 
-Format 実行:
+Format 実行
 
 ```bash
 uv run ruff format
 ```
 
-差分確認用途の Format:
+差分確認用途の Format
 
 ```bash
 uv run ruff format --check
@@ -237,25 +237,25 @@ uv run ruff format --check
 
 ### 4.4 ty
 
-型チェック実行:
+型チェック実行
 
 ```bash
 uv run ty check
 ```
 
-特定パスだけ型チェック:
+特定パスだけ型チェック
 
 ```bash
 uv run ty check src tests
 ```
 
-変更監視:
+変更監視
 
 ```bash
 uv run ty check --watch
 ```
 
-自動修正が可能なものを修正:
+自動修正が可能なものを修正
 
 ```bash
 uv run ty check --fix
@@ -265,7 +265,7 @@ uv run ty check --fix
 
 設定は原則として `pyproject.toml` に集約する。
 
-例:
+例
 
 ```toml
 [project]
@@ -283,7 +283,7 @@ select = ["E", "F", "I", "UP"]
 [tool.ty]
 ```
 
-補足:
+補足
 
 - `requires-python` はサポート対象の下限を明示する
 - `ruff` の `target-version` は実行対象 Python に合わせる
@@ -300,7 +300,7 @@ select = ["E", "F", "I", "UP"]
 4. `uv run ty check`
 5. 必要に応じて `uv run pytest`
 
-コミット前の最小確認:
+コミット前の最小確認
 
 ```bash
 uv run ruff format --check
@@ -310,7 +310,7 @@ uv run ty check
 
 ## 7. 運用ルール
 
-- `python` や `pip` を直接叩く運用は避け、原則 `uv run` と `uv add` を使う
+- `python` や `pip` を直接実行する運用は避け、原則 `uv run` と `uv add` を使う
 - Lint エラーを安易に ignore せず、まず修正可能か確認する
 - `ruff check --fix` で直せるものは自動修正を使う
 - 型アノテーションは公開 API と複雑なロジックを優先して付与する

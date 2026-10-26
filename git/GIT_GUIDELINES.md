@@ -1,6 +1,6 @@
 # Gitガイドライン
 
-このガイドラインは、開発時に Git を安全かつ一貫して運用するための基本方針をまとめる。
+このガイドラインは開発時に Git を安全かつ一貫して運用するための基本方針をまとめる。
 
 ## 1. 基本方針
 
@@ -16,14 +16,14 @@
 
 新しい作業は目的ごとにブランチを切る。
 
-例:
+例
 
 - `feature/add-login-api`
 - `fix/null-check-on-user-service`
 - `docs/update-git-guide`
 - `chore/update-ci-config`
 
-推奨:
+推奨
 
 - 1 ブランチ 1 目的を守る
 - 長期間放置するブランチを減らす
@@ -31,7 +31,7 @@
 
 ### 2.2 ベースブランチの更新
 
-作業開始前や PR 更新前には、ベースブランチの最新状態を取り込む。
+作業開始前や PR 更新前にはベースブランチの最新状態を取り込む。
 
 ```bash
 git switch main
@@ -54,7 +54,7 @@ git diff
 git add -p
 ```
 
-推奨:
+推奨
 
 - `git add .` を常用せず、意図した変更だけをステージする
 - 生成物、ログ、秘密情報が含まれていないか確認する
@@ -77,7 +77,7 @@ git add -p
 - まず `git fetch` でリモート状況を確認する
 - 自動マージを避けたい場合は `git pull` より `fetch + rebase` を使う
 
-例:
+例
 
 ```bash
 git fetch origin
@@ -90,7 +90,7 @@ git rebase origin/main
 - 履歴をそのまま残したい統合には `merge` を使う
 - 公開済みブランチを安易に `rebase` しない
 
-判断基準:
+判断基準
 
 - 自分だけが使っている作業ブランチ: `rebase`
 - 共有ブランチや統合作業: `merge`
@@ -99,7 +99,7 @@ git rebase origin/main
 
 `cherry-pick` は、別ブランチの特定コミットだけを現在のブランチへ取り込む操作。
 
-前提:
+前提
 
 - 対象コミットが 1 つの目的にまとまっている
 - 対象コミット単体で意味が通る
@@ -109,7 +109,7 @@ git rebase origin/main
 コミット単位が粗い場合や複数目的が混ざっている場合は、`cherry-pick` ではなく元ブランチ側でコミットを整理してから取り込む。
 コミット単位の判断基準は `COMMIT_UNIT_GUIDE.md` を参照する。
 
-実行例:
+実行例
 
 ```bash
 git switch release/1.2
@@ -124,19 +124,19 @@ git cherry-pick <old-commit-hash> <new-commit-hash>
 
 ## 5. push と共有
 
-通常の push:
+通常の push
 
 ```bash
 git push -u origin feature/add-login-api
 ```
 
-履歴更新後の push:
+履歴更新後の push
 
 ```bash
 git push --force-with-lease
 ```
 
-運用ルール:
+運用ルール
 
 - 初回 push では `-u` を付けて追跡設定を作る
 - 他人が触る可能性のあるブランチで強制 push しない
@@ -144,7 +144,7 @@ git push --force-with-lease
 
 ## 6. コードレビュー前の確認
 
-PR 作成前の最小確認:
+PR 作成前の最小確認
 
 ```bash
 git status
@@ -152,7 +152,7 @@ git diff --cached
 git log --oneline --decorate -5
 ```
 
-確認内容:
+確認内容
 
 - ステージ済み差分に不要な変更がないか
 - コミットの分け方が妥当か

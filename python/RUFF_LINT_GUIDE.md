@@ -1,6 +1,6 @@
 # Ruff Lint設定ガイド
 
-この文書は、`ruff` のうち lint 設定に絞って説明する。
+この文書は`ruff` のうち lint 設定に絞って説明する。
 
 - 対象: `ruff check`
 - 非対象: `ruff format`
@@ -17,7 +17,7 @@
 
 ## 2. 基本設定
 
-最小構成の例:
+最小構成の例
 
 ```toml
 [tool.ruff]
@@ -28,27 +28,27 @@ target-version = "py312"
 select = ["E", "F"]
 ```
 
-意味:
+意味
 
 - `line-length`: 1行の長さの基準
 - `target-version`: 対象 Python バージョン
 - `select`: 有効化するルール群
 
-`E` と `F` は、まず導入しやすい基本ルール。
+`E` と `F` はまず導入しやすい基本ルール。
 
 - `E`: pycodestyle 系の一部エラー
 - `F`: Pyflakes 系の問題検出
 
 ## 3. よく使うルール群
 
-実務で追加しやすい代表例:
+実務で追加しやすい代表例
 
 ```toml
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
 ```
 
-各ルール群の概要:
+各ルール群の概要
 
 - `E`: 基本的なコードスタイル上の問題
 - `F`: 未使用 import、未定義名などの不具合候補
@@ -56,7 +56,7 @@ select = ["E", "F", "I", "UP", "B"]
 - `UP`: 新しい Python 構文への更新候補
 - `B`: バグになりやすい書き方の検出
 
-推奨の考え方:
+推奨の考え方
 
 - 新規プロジェクト: `E`, `F`, `I`, `UP`
 - 品質を少し強めたい場合: `B` を追加
@@ -75,7 +75,7 @@ target-version = "py312"
 select = ["E", "F", "I", "UP", "B"]
 ```
 
-この設定は、基本的な不具合検出と import 整理、Python の更新提案までをカバーする。
+この設定は基本的な不具合の検出、import の整理、Python の更新提案までを扱う。
 
 ### 4.2 段階的導入向け設定
 
@@ -89,7 +89,7 @@ select = ["E", "F"]
 ignore = ["E501"]
 ```
 
-この設定は、既存コードベースへ導入しやすい。長い行の扱いは formatter や後続整理に任せやすい。
+この設定は既存コードベースへ導入しやすい。長い行の扱いは formatter や後続整理に任せやすい。
 
 ### 4.3 import 整理を重視する設定
 
@@ -108,7 +108,7 @@ select = ["E", "F", "I"]
 
 `select` は有効化するルール、`ignore` は無効化するルール。
 
-例:
+例
 
 ```toml
 [tool.ruff.lint]
@@ -116,7 +116,7 @@ select = ["E", "F", "I", "UP", "B"]
 ignore = ["B008"]
 ```
 
-考え方:
+考え方
 
 - `select` で基準を定義する
 - `ignore` は例外として最小限に使う
@@ -127,7 +127,7 @@ ignore = ["B008"]
 
 既存設定に追加したい場合は `extend-select`、追加で除外したい場合は `extend-ignore` を使う。
 
-例:
+例
 
 ```toml
 [tool.ruff.lint]
@@ -136,7 +136,7 @@ extend-select = ["I", "UP"]
 extend-ignore = ["E501"]
 ```
 
-用途:
+用途
 
 - ベースルールは維持したまま少しずつ厳しくする
 - 共通テンプレートに追加差分だけ書く
@@ -145,7 +145,7 @@ extend-ignore = ["E501"]
 
 特定ファイルだけルールを緩めたい場合は `per-file-ignores` を使う。
 
-例:
+例
 
 ```toml
 [tool.ruff.lint]
@@ -156,12 +156,12 @@ select = ["E", "F", "I", "UP", "B"]
 "__init__.py" = ["F401"]
 ```
 
-用途:
+用途
 
 - `__init__.py` で再公開 import を許可する
 - テストコードだけ一部ルールを緩和する
 
-注意:
+注意
 
 - 例外はファイル種別ごとに理由が説明できるものに限る
 - 広すぎるパターン指定は避ける
@@ -170,35 +170,35 @@ select = ["E", "F", "I", "UP", "B"]
 
 `ruff` は多くの指摘を自動修正できる。
 
-実行例:
+実行例
 
 ```bash
 uv run ruff check --fix
 ```
 
-確認だけ行う場合:
+確認だけ行う場合
 
 ```bash
 uv run ruff check
 ```
 
-自動修正の対象は便利だが、すべての問題が直るわけではない。意味変更の可能性がある指摘は手動確認する。
+自動修正は便利だが、すべての問題が直るわけではない。修正によって意味が変わる可能性のある指摘は手動で確認する。
 
 ## 9. 抑制コメント
 
-行単位で抑制する場合:
+行単位で抑制する場合
 
 ```python
 from typing import Iterable  # noqa: UP035
 ```
 
-ファイル単位で抑制する場合:
+ファイル単位で抑制する場合
 
 ```python
 # ruff: noqa: F401
 ```
 
-運用方針:
+運用方針
 
 - まず設定で解決できるか確認する
 - 次にコード修正で対応できるか確認する
@@ -206,21 +206,21 @@ from typing import Iterable  # noqa: UP035
 
 ## 10. 推奨コマンド
 
-日常利用:
+日常利用
 
 ```bash
 uv run ruff check
 uv run ruff check --fix
 ```
 
-対象を限定する場合:
+対象を限定する場合
 
 ```bash
 uv run ruff check src
 uv run ruff check src tests
 ```
 
-CI 向け:
+CI 向け
 
 ```bash
 uv run ruff check

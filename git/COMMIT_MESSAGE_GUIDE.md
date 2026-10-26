@@ -1,6 +1,6 @@
 # コミットメッセージガイド
 
-この文書は、Conventional Commits を前提にしたコミットメッセージの運用ルールをまとめる。
+この文書はConventional Commits を前提にしたコミットメッセージの運用ルールをまとめる。
 
 ## 1. 基本形式
 
@@ -12,7 +12,7 @@
 
 `scope` は任意だが、変更対象が明確になる場合は付ける。
 
-例:
+例
 
 ```text
 feat(auth): add refresh token validation
@@ -48,7 +48,7 @@ docs(git): add conventional commits guide
 - 動詞から始める
 - 過去形ではなく命令形または現在形で書く
 
-良い例:
+良い例
 
 - `fix(user): prevent duplicate email registration`
 - `docs(readme): update local setup steps`
@@ -60,7 +60,7 @@ docs(git): add conventional commits guide
 - `です`、`ます`、`する` で終えない
 - 主語を省き、変更内容から始める
 
-良い例:
+良い例
 
 - `fix(user): メールアドレスの重複登録防止`
 - `docs(readme): ローカルセットアップ手順の更新`
@@ -79,7 +79,7 @@ docs(git): add conventional commits guide
 
 `scope` は対象領域を短く表す。
 
-例:
+例
 
 - `auth`
 - `api`
@@ -88,7 +88,7 @@ docs(git): add conventional commits guide
 - `git`
 - `readme`
 
-ルール:
+ルール
 
 - ディレクトリ名、モジュール名、機能名など一貫した単位で付ける
 - 毎回無理に付ける必要はない
@@ -100,13 +100,13 @@ docs(git): add conventional commits guide
 
 後方互換性を壊す変更は `!` または本文で明示する。
 
-例:
+例
 
 ```text
 feat(api)!: remove legacy login response
 ```
 
-または:
+または
 
 ```text
 feat(api): change login response format
@@ -118,13 +118,13 @@ BREAKING CHANGE: response field `token` was renamed to `access_token`
 
 件名だけで意図が十分に伝わらない場合は本文を付ける。
 
-本文で書く内容:
+本文で書く内容
 
 - 変更理由
 - 制約や移行上の注意
 - 代替案を採らなかった理由
 
-例:
+例
 
 ```text
 fix(auth): reject expired refresh tokens
@@ -133,7 +133,7 @@ The previous validation only checked signature and issuer.
 This change also validates expiration to prevent reuse of stale tokens.
 ```
 
-Issue 連携がある場合の例:
+Issue 連携がある場合の例
 
 ```text
 feat(ui): add loading state to dashboard
