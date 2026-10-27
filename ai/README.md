@@ -19,3 +19,6 @@
 | 海外 | [イタリア当局によるChatGPTへの措置（2023年〜2026年）](./incident-cases/ITALY_GARANTE_CHATGPT_ACTION.md) | 法的根拠、透明性、年齢確認、漏えい通知、監督機関の管轄 |
 | 海外・開発AIエージェント | [Replit Agentによる本番データ削除（2025年）](./incident-cases/REPLIT_AGENT_PRODUCTION_DATA_DELETION.md) | 開発・本番の分離、破壊操作の承認、復旧手段 |
 | 海外・開発AIエージェント | [Amazon Q Developer拡張のサプライチェーン侵害（2025年）](./incident-cases/AMAZON_Q_DEVELOPER_EXTENSION_COMPROMISE.md) | トークンの最小権限、リリース保護、拡張機能の更新 |
+| 海外・開発AIエージェント | [OpenAIの内部評価中に生じたHugging Face侵害（2026年）](./incident-cases/OPENAI_HUGGING_FACE_EVALUATION_INTRUSION.md) | 評価環境の隔離、実行記録の照合、連携処理の停止 |
+
+資料確認日: 2026年10月26日。法令・指針の公表日と施行日、事故の発生日と公表日を区別する。継続調査の入口には[IPAのAIセキュリティ短信](https://www.ipa.go.jp/digital/ai/security/ai-security-bulletin.html)、技術対策には[OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html)を参照し、事例の事実は当事者の原文で確認する。

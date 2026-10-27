@@ -54,6 +54,10 @@ AIエージェントは開発を支援するツールであり、設計・変更
 - 依存パッケージの追加・更新、外部スクリプトの実行、権限昇格
 - 認証情報・秘密情報の参照、生成、登録、ローテーション
 
+### 5.3 承認と実行の照合
+
+[OWASPのAI Agent Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html)に沿い、承認の確認をモデルの自己申告だけに任せない。実行側で利用者、ツール、対象、引数、有効期限を照合し、対象や引数が変わった場合は再承認する。承認の再利用を防ぎ、照合できない操作は実行しない。
+
 ## 6. コード・設定変更の確認
 
 エージェントが作成・変更したコード、設定、SQL、IaC、CI/CD定義、依存関係は、利用者が内容を理解したうえでレビューする。
@@ -78,6 +82,10 @@ AIエージェントは開発を支援するツールであり、設計・変更
 - セキュリティ、性能、互換性、データ整合性への影響が大きい変更は、通常のテストに加えて専門家レビューまたは段階的な検証を行う
 - テスト不能な変更、失敗したテスト、未確認の懸念を隠さず、レビュー・PR・引継ぎに記録する
 
+[OWASPのプロンプトインジェクション対策](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html)を参照し、外部文書・ツール結果・会話履歴に不正な指示を入れた試験を行う。禁止操作を止められるかに加え、正当な作業を誤って拒否していないかも確認する。テストには架空データと検証用ツールを使い、本番の秘密情報を入れない。
+
+[OWASPのGenAI Red Teaming Manual Version 1.0](https://genai.owasp.org/resource/genai-red-teaming-manual-version-1-0/)は2026年10月20日公表で、計画から是正までの試験を扱う。試験範囲、期待結果、実際の許可・拒否・承認待ち・停止、未解決のリスクを記録する。モデルの回答だけで合否を決めず、ツール実行結果と対象システムの状態を照合する。
+
 ## 8. Git・レビュー・リリース
 
 - エージェントを使用する前後に、`git status`、`git diff`、必要に応じて`git diff --cached`で変更を確認する
@@ -100,11 +108,26 @@ AIエージェントは開発を支援するツールであり、設計・変更
 
 AIエージェントに固有のリスクは、OWASP Top 10 for Agentic Applications（2025年12月公表）が、目標の乗っ取り、ツールの悪用、IDと権限の悪用、サプライチェーン、想定外のコード実行、メモリとコンテキストの汚染、エージェント間通信、連鎖的な障害、人とエージェントの信頼の悪用、逸脱したエージェントの10項目に整理している。エージェントを新たに導入する際、または権限や連携先を広げる際は、この10項目に照らして制御を点検する。
 
+### 9.1 記憶・検索・エージェント間の連携
+
+- 保存する記憶や検索用データは、出所、利用者・セッション、保存期間を管理し、削除できるようにする
+- 取り込んだ文書や他のエージェントの出力を、利用者の承認や権限付与として扱わない
+- 子エージェントや連携先に渡すデータと権限を限定し、親の認証情報を無条件に引き継がせない
+- 不正な内容が保存された場合は、その内容を参照する処理を停止し、記憶・検索用データを隔離して影響を確認する
+
+[OWASPのAI Agent Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html)の記憶の分離と連携時の権限確認を適用する。[Agent Control Standard](https://genai.owasp.org/resource/agent-control-standard-acs/)は2026年9月1日にOWASPが公開した実行時制御の参照資料であり、導入時は使用するフレームワークで制御が実際に働くか検証する。
+
+### 9.2 評価・検証環境の隔離
+
+[OpenAIの内部評価中にHugging Faceが侵害された事例](./incident-cases/OPENAI_HUGGING_FACE_EVALUATION_INTRUSION.md)も踏まえ、評価環境を本番・共有基盤から分離する。インターネット接続、共有パッケージ保管先、他の実行環境との通信経路を点検し、停止時には連携処理と認証情報も無効化できるようにする。許可された手段で完了できない場合は、制限を回避せず未完了として人に引き継がせる。
+
 ## 10. インシデント対応
 
 秘密情報の入力・送信、想定外の変更、誤った外部操作、脆弱なコードの混入などを認識した場合は、[AI利用ガイドラインの初動手順](./AI_USAGE_GUIDELINE.md#81-インシデント発生時の初動)に従う。
 
-加えて、エージェントの実行を停止し、セッション、実行ログ、差分、利用した認証情報、外部送信先を保全する。認証情報やトークンが露出した可能性がある場合は、管理者の判断のもと速やかに失効・ローテーションする。
+加えて、エージェントの実行を停止し、セッション、実行ログ、差分、利用した認証情報の識別子、外部送信先を保全する。認証情報やトークンが露出した可能性がある場合は、管理者の判断のもと速やかに失効・ローテーションする。
+
+認証情報の値や顧客データを通常のログへコピーしない。証拠として保存する必要があるデータは、管理部門がアクセスを制限した場所で保管する。
 
 ## 11. 作業完了時のチェックリスト
 
@@ -123,3 +146,8 @@ AIエージェントに固有のリスクは、OWASP Top 10 for Agentic Applicat
 - [OWASP: Top 10 for Agentic Applications for 2026](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/)
 - [OWASP: Top 10 for LLM Applications 2026](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/)
 - [IPA: テキスト生成AIの導入・運用ガイドライン](https://www.ipa.go.jp/jinzai/ics/core_human_resource/final_project/2024/generative-ai-guideline.html)
+
+- [OWASP: AI Agent Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html)
+- [OWASP: LLM Prompt Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html)
+- [OWASP: Agent Control Standard](https://genai.owasp.org/resource/agent-control-standard-acs/)
+- [OWASP: GenAI Red Teaming Manual Version 1.0](https://genai.owasp.org/resource/genai-red-teaming-manual-version-1-0/)
